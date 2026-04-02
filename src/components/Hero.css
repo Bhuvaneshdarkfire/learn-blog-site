@@ -69,7 +69,6 @@
   flex: 1;
   position: relative;
   min-height: 500px;
-  mix-blend-mode: multiply; /* Removes the sketchfab grey background completely */
   display: flex;
   align-items: center;
   justify-content: center;
