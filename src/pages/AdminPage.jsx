@@ -110,8 +110,8 @@ export default function AdminPage() {
       return;
     }
     
-    // Direct display URL trick for Google Drive
-    const directUrl = `https://drive.google.com/uc?export=view&id=${id}`;
+    // Direct display URL trick for Google Drive leveraging lh3
+    const directUrl = `https://lh3.googleusercontent.com/d/${id}`;
     
     const newImg = { 
       id: Date.now().toString(), 
@@ -266,15 +266,24 @@ export default function AdminPage() {
 
             <p className="admin-gallery-count">{galleryImages.length} images fetching from Cloud</p>
             <div className="admin-gallery-grid">
-              {galleryImages.map(img => (
-                <div key={img.id} className="admin-gallery-item">
-                  <img src={img.src} alt={img.name} loading="lazy" />
-                  <div className="admin-gallery-item__overlay">
-                    <span>{img.name}</span>
-                    <button onClick={() => deleteImage(img.id)} className="btn btn-danger btn-sm">🗑️ Remove</button>
+              {galleryImages.map(img => {
+                // Auto-fix broken uc?export=view urls for legacy data in firebase
+                let finalSrc = img.src;
+                if(finalSrc.includes('drive.google.com/uc?export=view&id=')){
+                   const idMatch = finalSrc.split('id=')[1];
+                   if(idMatch) finalSrc = `https://lh3.googleusercontent.com/d/${idMatch}`;
+                }
+                
+                return (
+                  <div key={img.id} className="admin-gallery-item">
+                    <img src={finalSrc} alt={img.name} loading="lazy" />
+                    <div className="admin-gallery-item__overlay">
+                      <span>{img.name}</span>
+                      <button onClick={() => deleteImage(img.id)} className="btn btn-danger btn-sm">🗑️ Remove</button>
+                    </div>
                   </div>
-                </div>
-              ))}
+                );
+              })}
             </div>
           </div>
         )}

@@ -48,14 +48,21 @@ export default function GalleryPage() {
                 {images.length} images
               </p>
               <div className="gallery-grid">
-                {images.map((img) => (
-                  <div key={img.id} className="gallery-item" onClick={() => setLightbox(img)}>
-                    <img src={img.src} alt={img.name} loading="lazy" />
-                    <div className="gallery-item__overlay">
-                      <span>{img.name}</span>
+                {images.map((img) => {
+                  let finalSrc = img.src;
+                  if(finalSrc.includes('drive.google.com/uc?export=view&id=')){
+                     const idMatch = finalSrc.split('id=')[1];
+                     if(idMatch) finalSrc = `https://lh3.googleusercontent.com/d/${idMatch}`;
+                  }
+                  return (
+                    <div key={img.id} className="gallery-item" onClick={() => setLightbox({...img, src: finalSrc})}>
+                      <img src={finalSrc} alt={img.name} loading="lazy" />
+                      <div className="gallery-item__overlay">
+                        <span>{img.name}</span>
+                      </div>
                     </div>
-                  </div>
-                ))}
+                  );
+                })}
               </div>
             </>
           )}
