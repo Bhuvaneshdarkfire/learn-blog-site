@@ -1,12 +1,22 @@
 import { useState, useEffect } from 'react';
+import { getFromFirebase } from '../firebase';
 import './GalleryPage.css';
 
 export default function GalleryPage() {
   const [images, setImages] = useState([]);
   const [lightbox, setLightbox] = useState(null);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    setImages(JSON.parse(localStorage.getItem('pencil_gallery') || '[]'));
+    const fetchImages = async () => {
+      setLoading(true);
+      const galleryDoc = await getFromFirebase('pencil_data', 'gallery');
+      if (galleryDoc?.images) {
+        setImages(galleryDoc.images);
+      }
+      setLoading(false);
+    };
+    fetchImages();
   }, []);
 
   return (
@@ -22,27 +32,32 @@ export default function GalleryPage() {
 
       <section className="section">
         <div className="container">
-          <p style={{ color: 'var(--text-secondary)', marginBottom: '24px', textAlign: 'right' }}>
-            {images.length} images
-          </p>
-
-          {images.length === 0 ? (
+          {loading ? (
+            <div className="gallery-empty" style={{padding: '80px 0'}}>
+              <div className="admin-loading-badge">🔄 Loading images from Cloud...</div>
+            </div>
+          ) : images.length === 0 ? (
             <div className="gallery-empty">
               <span style={{ fontSize: '64px' }}>🖼️</span>
               <h3>No images yet</h3>
               <p>Check back soon for photos of our classrooms and student works!</p>
             </div>
           ) : (
-            <div className="gallery-grid">
-              {images.map((img) => (
-                <div key={img.id} className="gallery-item" onClick={() => setLightbox(img)}>
-                  <img src={img.src} alt={img.name} loading="lazy" />
-                  <div className="gallery-item__overlay">
-                    <span>{img.name}</span>
+            <>
+              <p style={{ color: 'var(--text-secondary)', marginBottom: '24px', textAlign: 'right' }}>
+                {images.length} images
+              </p>
+              <div className="gallery-grid">
+                {images.map((img) => (
+                  <div key={img.id} className="gallery-item" onClick={() => setLightbox(img)}>
+                    <img src={img.src} alt={img.name} loading="lazy" />
+                    <div className="gallery-item__overlay">
+                      <span>{img.name}</span>
+                    </div>
                   </div>
-                </div>
-              ))}
-            </div>
+                ))}
+              </div>
+            </>
           )}
 
           {lightbox && (

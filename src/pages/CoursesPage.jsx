@@ -1,15 +1,29 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import CourseCard from '../components/CourseCard';
 import GradeFilter from '../components/GradeFilter';
-import { courses, gradeGroups } from '../data/coursesData';
+import { courses as initialCourses, gradeGroups } from '../data/coursesData';
+import { getFromFirebase } from '../firebase';
 import './CoursesPage.css';
 
 export default function CoursesPage() {
   const [activeGroup, setActiveGroup] = useState('all');
   const [search, setSearch] = useState('');
+  const [customCourses, setCustomCourses] = useState([]);
+  const [loading, setLoading] = useState(true);
 
-  const customCourses = JSON.parse(localStorage.getItem('pencil_custom_courses') || '[]');
-  const allCourses = [...courses, ...customCourses];
+  useEffect(() => {
+    const fetchCourses = async () => {
+      setLoading(true);
+      const coursesDoc = await getFromFirebase('pencil_data', 'courses');
+      if (coursesDoc?.list) {
+        setCustomCourses(coursesDoc.list);
+      }
+      setLoading(false);
+    };
+    fetchCourses();
+  }, []);
+
+  const allCourses = [...initialCourses, ...customCourses];
 
   const filteredCourses = allCourses.filter((c) => {
     const matchesGroup = activeGroup === 'all' || c.category === activeGroup;
@@ -45,18 +59,26 @@ export default function CoursesPage() {
 
           <GradeFilter groups={gradeGroups} activeGroup={activeGroup} onSelect={setActiveGroup} />
 
-          <p className="courses-page__count">Showing {filteredCourses.length} courses</p>
+          {loading ? (
+             <div style={{textAlign: 'center', padding: '40px 0'}}>
+               <span className="admin-loading-badge">🔄 Loading dynamic cloud courses...</span>
+             </div>
+          ) : (
+             <>
+               <p className="courses-page__count">Showing {filteredCourses.length} courses</p>
 
-          <div className="courses-page__grid">
-            {filteredCourses.map((course) => (
-              <CourseCard key={course.id} course={course} />
-            ))}
-          </div>
+               <div className="courses-page__grid">
+                 {filteredCourses.map((course) => (
+                   <CourseCard key={course.id} course={course} />
+                 ))}
+               </div>
 
-          {filteredCourses.length === 0 && (
-            <div className="courses-page__empty">
-              <p>No courses found. Try a different filter or search.</p>
-            </div>
+               {filteredCourses.length === 0 && (
+                 <div className="courses-page__empty">
+                   <p>No courses found. Try a different filter or search.</p>
+                 </div>
+               )}
+             </>
           )}
         </div>
       </section>
