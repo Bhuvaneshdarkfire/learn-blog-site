@@ -28,12 +28,6 @@ export default function Hero() {
         <div className="hero__bg-circle hero__bg-circle--3" />
       </div>
 
-      <div className="hero__3d-background">
-        <Suspense fallback={<div className="hero__3d-loader">✨ Loading 3D Scene...</div>}>
-          <HeroScene />
-        </Suspense>
-      </div>
-
       <div className="hero__content container">
         <div className="hero__text">
           <div className="hero__badge animate-fade-in-up">
@@ -71,6 +65,11 @@ export default function Hero() {
           </div>
         </div>
 
+        <div className="hero__3d">
+          <Suspense fallback={<div className="hero__3d-loader">✨ Loading 3D Scene...</div>}>
+            <HeroScene />
+          </Suspense>
+        </div>
       </div>
     </section>
   );
