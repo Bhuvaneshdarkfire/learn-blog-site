@@ -46,10 +46,15 @@
 }
 
 .contact-page__card-text {
-  font-size: 0.88rem;
+  font-size: 0.92rem;
   color: var(--text-secondary);
   line-height: 1.6;
   white-space: pre-line;
+  transition: color 0.2s;
+}
+
+a.contact-page__card-text:hover {
+  color: var(--accent-blue);
 }
 
 /* Form */
@@ -62,7 +67,13 @@
   font-size: 1.4rem;
   font-weight: 600;
   color: var(--text-primary);
-  margin-bottom: 28px;
+  margin-bottom: 8px;
+}
+
+.contact-page__form-desc {
+  font-size: 0.95rem;
+  color: var(--text-secondary);
+  margin-bottom: 24px;
 }
 
 .contact-page__success {

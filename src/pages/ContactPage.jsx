@@ -27,53 +27,87 @@ export default function ContactPage() {
 
       <section className="section">
         <div className="container">
-          <div className="contact-page__layout">
-            <div className="contact-page__info">
-              <div className="contact-page__info-card glass-card">
-                <span>📱</span>
-                <h3>WhatsApp</h3>
-                <a href={`https://wa.me/91${businessInfo.whatsapp}`} target="_blank" rel="noopener noreferrer">
-                  +91 {businessInfo.whatsapp}
-                </a>
+          <div className="contact-page__grid">
+            <div className="contact-page__info-cards">
+              <div className="contact-page__card glass-card">
+                <span className="contact-page__card-icon">📱</span>
+                <div>
+                  <h3 className="contact-page__card-title">WhatsApp</h3>
+                  <a href={`https://wa.me/91${businessInfo.whatsapp}`} target="_blank" rel="noopener noreferrer" className="contact-page__card-text" style={{textDecoration:'none'}}>
+                    +91 {businessInfo.whatsapp}
+                  </a>
+                </div>
               </div>
-              <div className="contact-page__info-card glass-card">
-                <span>📧</span>
-                <h3>Email</h3>
-                <a href={`mailto:${businessInfo.email}`}>{businessInfo.email}</a>
+
+              <div className="contact-page__card glass-card">
+                <span className="contact-page__card-icon">📧</span>
+                <div>
+                  <h3 className="contact-page__card-title">Email</h3>
+                  <a href={`mailto:${businessInfo.email}`} className="contact-page__card-text" style={{textDecoration:'none'}}>
+                    {businessInfo.email}
+                  </a>
+                </div>
               </div>
-              <div className="contact-page__info-card glass-card">
-                <span>📸</span>
-                <h3>Instagram</h3>
-                <a href={businessInfo.instagram} target="_blank" rel="noopener noreferrer">
-                  {businessInfo.instagramHandle}
-                </a>
+
+              <div className="contact-page__card glass-card">
+                <span className="contact-page__card-icon">📸</span>
+                <div>
+                  <h3 className="contact-page__card-title">Instagram</h3>
+                  <a href={businessInfo.instagram} target="_blank" rel="noopener noreferrer" className="contact-page__card-text" style={{textDecoration:'none'}}>
+                    {businessInfo.instagramHandle}
+                  </a>
+                </div>
               </div>
-              <div className="contact-page__info-card glass-card">
-                <span>🕐</span>
-                <h3>Mode</h3>
-                <p>Online (Zoom) & Offline</p>
+
+              <div className="contact-page__card glass-card">
+                <span className="contact-page__card-icon">🕐</span>
+                <div>
+                  <h3 className="contact-page__card-title">Mode</h3>
+                  <p className="contact-page__card-text">Online (Zoom) & Offline</p>
+                </div>
               </div>
             </div>
 
             <div className="contact-page__form-wrapper glass-card">
-              <h2>Send us a Message</h2>
-              <p className="contact-page__form-desc">Fill the form and it will open WhatsApp with your message</p>
+              <h2 className="contact-page__form-title">Send us a Message</h2>
+              <p className="contact-page__form-desc">Fill the form and it will open WhatsApp with your message.</p>
+              
               {submitted && <div className="contact-page__success">✅ Opening WhatsApp...</div>}
+              
               <form onSubmit={handleSubmit} className="contact-page__form">
-                <input required placeholder="Your Name" value={form.name} onChange={e => setForm({...form, name: e.target.value})} />
-                <input placeholder="Phone Number" value={form.phone} onChange={e => setForm({...form, phone: e.target.value})} />
-                <select value={form.course} onChange={e => setForm({...form, course: e.target.value})}>
-                  <option value="">Select Course</option>
-                  <option>Cursive Handwriting</option>
-                  <option>Print & Lucida Handwriting</option>
-                  <option>Tamil Handwriting</option>
-                  <option>Calligraphy</option>
-                  <option>Drawing Classes</option>
-                  <option>All Subject Tuition</option>
-                  <option>Maths & Tamil Special</option>
-                </select>
-                <textarea placeholder="Your Message" rows={4} value={form.message} onChange={e => setForm({...form, message: e.target.value})} />
-                <button type="submit" className="btn btn-primary">💬 Send via WhatsApp</button>
+                <div className="contact-page__row">
+                  <div className="contact-page__field">
+                    <label>Your Name</label>
+                    <input required placeholder="Enter your name" value={form.name} onChange={e => setForm({...form, name: e.target.value})} />
+                  </div>
+                  <div className="contact-page__field">
+                    <label>Phone Number</label>
+                    <input placeholder="Enter phone number" value={form.phone} onChange={e => setForm({...form, phone: e.target.value})} />
+                  </div>
+                </div>
+
+                <div className="contact-page__field">
+                  <label>Select Course</label>
+                  <select value={form.course} onChange={e => setForm({...form, course: e.target.value})}>
+                    <option value="">Choose a course...</option>
+                    <option value="Cursive Handwriting">Cursive Handwriting</option>
+                    <option value="Print & Lucida Handwriting">Print & Lucida Handwriting</option>
+                    <option value="Tamil Handwriting">Tamil Handwriting</option>
+                    <option value="Calligraphy">Calligraphy</option>
+                    <option value="Drawing Classes">Drawing Classes</option>
+                    <option value="All Subject Tuition">All Subject Tuition</option>
+                    <option value="Maths & Tamil Special">Maths & Tamil Special</option>
+                  </select>
+                </div>
+
+                <div className="contact-page__field">
+                  <label>Your Message</label>
+                  <textarea placeholder="How can we help you?" rows={4} value={form.message} onChange={e => setForm({...form, message: e.target.value})} />
+                </div>
+
+                <button type="submit" className="btn btn-primary contact-page__submit">
+                  💬 Send via WhatsApp
+                </button>
               </form>
             </div>
           </div>
