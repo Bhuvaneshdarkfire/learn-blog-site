@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { businessInfo } from '../data/coursesData';
 import './Hero.css';
 
-const HeroScene = lazy(() => import('./HeroScene'));
+import heroGraphic from '../hero-graphic.png';
 
 export default function Hero() {
   const [displayText, setDisplayText] = useState('');
@@ -65,10 +65,8 @@ export default function Hero() {
           </div>
         </div>
 
-        <div className="hero__3d">
-          <Suspense fallback={<div className="hero__3d-loader">✨ Loading 3D Scene...</div>}>
-            <HeroScene />
-          </Suspense>
+        <div className="hero__image-container animate-fade-in-up delay-2">
+          <img src={heroGraphic} alt="Handwriting and Creativity" className="hero__graphic" />
         </div>
       </div>
     </section>

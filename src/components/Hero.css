@@ -65,13 +65,25 @@
   z-index: 3;
 }
 
-.hero__3d {
+.hero__image-container {
   flex: 1;
-  position: relative;
-  min-height: 500px;
   display: flex;
-  align-items: center;
   justify-content: center;
+  align-items: center;
+}
+
+.hero__graphic {
+  width: 100%;
+  max-width: 500px;
+  height: auto;
+  border-radius: 20px;
+  box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+  transform: rotate(2deg);
+  transition: transform 0.3s ease;
+}
+
+.hero__graphic:hover {
+  transform: translateY(-10px) rotate(0deg);
 }
 
 /* Badge */
@@ -186,9 +198,13 @@
     align-items: center;
   }
 
-  .hero__3d {
+  .hero__image-container {
     width: 100%;
-    min-height: 350px;
+    margin-top: 2rem;
+  }
+  
+  .hero__graphic {
+    max-width: 350px;
   }
 
   .hero__actions {
@@ -207,7 +223,7 @@
     padding-bottom: 40px;
   }
 
-  .hero__3d {
-    min-height: 250px;
+  .hero__graphic {
+    max-width: 250px;
   }
 }
