@@ -1,0 +1,37 @@
+.grade-filter {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 10px;
+  margin-bottom: 48px;
+}
+
+.grade-filter__btn {
+  padding: 10px 24px;
+  border-radius: var(--radius-full);
+  font-family: var(--font-heading);
+  font-size: 0.88rem;
+  font-weight: 500;
+  color: var(--text-secondary);
+  background: var(--bg-card);
+  border: 1.5px solid var(--border-light);
+  backdrop-filter: blur(10px);
+  transition: all var(--transition-base);
+}
+
+.grade-filter__btn:hover {
+  color: var(--accent-blue);
+  border-color: rgba(74, 122, 255, 0.2);
+  background: rgba(74, 122, 255, 0.05);
+}
+
+.grade-filter__btn--active {
+  background: var(--gradient-primary);
+  color: var(--text-white);
+  border-color: transparent;
+  box-shadow: 0 4px 20px rgba(74, 122, 255, 0.3);
+}
+
+.grade-filter__btn--active:hover {
+  color: var(--text-white);
+}

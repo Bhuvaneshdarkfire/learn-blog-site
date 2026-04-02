@@ -1,0 +1,5 @@
+.gallery-page__hero {
+  padding-top: calc(var(--nav-height) + 60px);
+  padding-bottom: 20px;
+  text-align: center;
+}

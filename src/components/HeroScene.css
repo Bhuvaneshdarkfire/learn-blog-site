@@ -1,0 +1,24 @@
+.hero-scene {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 55%;
+  height: 100%;
+  z-index: 1;
+  pointer-events: auto;
+}
+
+@media (max-width: 968px) {
+  .hero-scene {
+    position: relative;
+    width: 100%;
+    height: 350px;
+    order: -1;
+  }
+}
+
+@media (max-width: 480px) {
+  .hero-scene {
+    height: 280px;
+  }
+}
