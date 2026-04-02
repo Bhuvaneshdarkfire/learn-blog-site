@@ -1,12 +1,13 @@
 import { useState, useEffect, Suspense, lazy } from 'react';
 import { Link } from 'react-router-dom';
+import { businessInfo } from '../data/coursesData';
 import './Hero.css';
 
 const HeroScene = lazy(() => import('./HeroScene'));
 
 export default function Hero() {
   const [displayText, setDisplayText] = useState('');
-  const fullText = "Shaping Tomorrow's Leaders";
+  const fullText = "Kids After School Program";
   const [textIndex, setTextIndex] = useState(0);
 
   useEffect(() => {
@@ -31,7 +32,7 @@ export default function Hero() {
         <div className="hero__text">
           <div className="hero__badge animate-fade-in-up">
             <span className="hero__badge-dot" />
-            Admissions Open 2026-27
+            MSME Certified Academy
           </div>
 
           <h1 className="hero__title animate-fade-in-up delay-1">
@@ -40,8 +41,9 @@ export default function Hero() {
           </h1>
 
           <p className="hero__subtitle animate-fade-in-up delay-2">
-            A futuristic learning experience for students from <strong>Kindergarten to 12th Grade</strong>.
-            Unlock potential with expert guidance, innovative curriculum, and a nurturing environment.
+            Handwriting, Drawing & Tuition classes by <strong>{businessInfo.founder}</strong>.
+            {' '}{businessInfo.studentsTrained} students trained across {businessInfo.countries} countries.
+            Online via Zoom & Offline sessions available.
           </p>
 
           <div className="hero__actions animate-fade-in-up delay-3">
@@ -51,13 +53,13 @@ export default function Hero() {
                 <path d="M5 12h14M12 5l7 7-7 7"/>
               </svg>
             </Link>
-            <Link to="/contact" className="btn btn-secondary" id="hero-cta-contact">
-              Contact Us
-            </Link>
+            <a href={`https://wa.me/91${businessInfo.whatsapp}`} className="btn btn-secondary" id="hero-cta-whatsapp" target="_blank" rel="noopener noreferrer">
+              WhatsApp Us
+            </a>
           </div>
 
           <div className="hero__grade-pills animate-fade-in-up delay-4">
-            {['KG', 'Grade 1-5', 'Grade 6-8', 'Grade 9-10', 'Grade 11-12'].map((g) => (
+            {['✍️ Handwriting', '🎨 Drawing', '📝 Calligraphy', '📚 Tuition', '🌍 Online'].map((g) => (
               <span key={g} className="hero__pill">{g}</span>
             ))}
           </div>

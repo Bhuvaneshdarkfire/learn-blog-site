@@ -1,4 +1,4 @@
-import { useState, useMemo } from 'react';
+import { useState } from 'react';
 import CourseCard from '../components/CourseCard';
 import GradeFilter from '../components/GradeFilter';
 import { courses, gradeGroups } from '../data/coursesData';
@@ -8,74 +8,54 @@ export default function CoursesPage() {
   const [activeGroup, setActiveGroup] = useState('all');
   const [search, setSearch] = useState('');
 
-  const filtered = useMemo(() => {
-    let result = courses;
-    if (activeGroup !== 'all') {
-      result = result.filter((c) => c.group === activeGroup);
-    }
-    if (search.trim()) {
-      const q = search.toLowerCase();
-      result = result.filter(
-        (c) =>
-          c.name.toLowerCase().includes(q) ||
-          c.description.toLowerCase().includes(q) ||
-          c.grade.toLowerCase().includes(q)
-      );
-    }
-    return result;
-  }, [activeGroup, search]);
+  const customCourses = JSON.parse(localStorage.getItem('pencil_custom_courses') || '[]');
+  const allCourses = [...courses, ...customCourses];
+
+  const filteredCourses = allCourses.filter((c) => {
+    const matchesGroup = activeGroup === 'all' || c.category === activeGroup;
+    const matchesSearch = c.title.toLowerCase().includes(search.toLowerCase()) ||
+      c.description.toLowerCase().includes(search.toLowerCase());
+    return matchesGroup && matchesSearch;
+  });
 
   return (
     <main className="courses-page" id="courses-page">
-      <section className="courses-page__hero">
+      <section className="section courses-page__hero">
         <div className="container">
-          <h1 className="section-title">Our Courses</h1>
+          <h1 className="section-title gradient-text">Our Courses</h1>
           <p className="section-subtitle">
-            Explore our comprehensive curriculum designed for every learning stage from KG to 12th Grade
+            Handwriting, Drawing, Calligraphy & Tuition — for ages 5 and above
           </p>
         </div>
       </section>
 
       <section className="section">
         <div className="container">
-          {/* Search */}
           <div className="courses-page__search" id="course-search">
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-              <circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
+              <circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/>
             </svg>
             <input
               type="text"
               placeholder="Search courses..."
               value={search}
               onChange={(e) => setSearch(e.target.value)}
-              className="courses-page__search-input"
-              id="course-search-input"
             />
           </div>
 
-          {/* Filter */}
-          <GradeFilter
-            groups={gradeGroups}
-            activeGroup={activeGroup}
-            onSelect={setActiveGroup}
-          />
+          <GradeFilter groups={gradeGroups} activeGroup={activeGroup} onSelect={setActiveGroup} />
 
-          {/* Results */}
-          <div className="courses-page__count">
-            Showing {filtered.length} course{filtered.length !== 1 ? 's' : ''}
+          <p className="courses-page__count">Showing {filteredCourses.length} courses</p>
+
+          <div className="courses-page__grid">
+            {filteredCourses.map((course) => (
+              <CourseCard key={course.id} course={course} />
+            ))}
           </div>
 
-          {filtered.length > 0 ? (
-            <div className="courses-page__grid">
-              {filtered.map((course) => (
-                <CourseCard key={course.id} course={course} />
-              ))}
-            </div>
-          ) : (
+          {filteredCourses.length === 0 && (
             <div className="courses-page__empty">
-              <span className="courses-page__empty-icon">🔍</span>
-              <h3>No courses found</h3>
-              <p>Try adjusting your search or filter</p>
+              <p>No courses found. Try a different filter or search.</p>
             </div>
           )}
         </div>

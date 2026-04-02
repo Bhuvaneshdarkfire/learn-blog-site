@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom';
+import { businessInfo } from '../data/coursesData';
 import './Footer.css';
 
 export default function Footer() {
@@ -12,20 +13,15 @@ export default function Footer() {
           <div className="footer__brand">
             <Link to="/" className="footer__logo">
               <span className="footer__logo-icon">✏️</span>
-              <span className="footer__logo-text">Pencil Class</span>
+              <span className="footer__logo-text">Pencil Classes</span>
             </Link>
             <p className="footer__tagline">
-              Shaping tomorrow's leaders through innovative education from Kindergarten to 12th Grade.
+              Kids After School Program — Handwriting, Drawing & Tuition by {businessInfo.founder}.
             </p>
             <div className="footer__socials">
-              {['Facebook', 'Instagram', 'YouTube', 'WhatsApp'].map((s) => (
-                <a key={s} href="#" className="footer__social-link" aria-label={s}>
-                  {s === 'Facebook' && '📘'}
-                  {s === 'Instagram' && '📸'}
-                  {s === 'YouTube' && '▶️'}
-                  {s === 'WhatsApp' && '💬'}
-                </a>
-              ))}
+              <a href={businessInfo.instagram} target="_blank" rel="noopener noreferrer" className="footer__social-link" aria-label="Instagram">📸</a>
+              <a href={`https://wa.me/91${businessInfo.whatsapp}`} target="_blank" rel="noopener noreferrer" className="footer__social-link" aria-label="WhatsApp">💬</a>
+              <a href={`mailto:${businessInfo.email}`} className="footer__social-link" aria-label="Email">✉️</a>
             </div>
           </div>
 
@@ -41,15 +37,16 @@ export default function Footer() {
             </ul>
           </div>
 
-          {/* Grades */}
+          {/* Our Courses */}
           <div className="footer__col">
-            <h4 className="footer__col-title">Our Programs</h4>
+            <h4 className="footer__col-title">Our Courses</h4>
             <ul className="footer__list">
-              <li><Link to="/courses">Kindergarten (KG)</Link></li>
-              <li><Link to="/courses">Grade 1 - 5</Link></li>
-              <li><Link to="/courses">Grade 6 - 8</Link></li>
-              <li><Link to="/courses">Grade 9 - 10 (Board Prep)</Link></li>
-              <li><Link to="/courses">Grade 11 - 12 (JEE/NEET)</Link></li>
+              <li><Link to="/courses">Cursive Handwriting</Link></li>
+              <li><Link to="/courses">Print & Lucida Handwriting</Link></li>
+              <li><Link to="/courses">Tamil Handwriting</Link></li>
+              <li><Link to="/courses">Calligraphy</Link></li>
+              <li><Link to="/courses">Drawing Classes</Link></li>
+              <li><Link to="/courses">All Subject Tuition</Link></li>
             </ul>
           </div>
 
@@ -58,27 +55,27 @@ export default function Footer() {
             <h4 className="footer__col-title">Get in Touch</h4>
             <ul className="footer__list footer__contact-list">
               <li>
-                <span>📍</span>
-                123 Education Lane, City - 636001
-              </li>
-              <li>
-                <span>📞</span>
-                +91 98765 43210
+                <span>📱</span>
+                <a href={`https://wa.me/91${businessInfo.whatsapp}`} target="_blank" rel="noopener noreferrer">+91 {businessInfo.whatsapp}</a>
               </li>
               <li>
                 <span>✉️</span>
-                info@pencilclass.edu
+                <a href={`mailto:${businessInfo.email}`}>{businessInfo.email}</a>
               </li>
               <li>
-                <span>🕐</span>
-                Mon - Sat: 9:00 AM - 7:00 PM
+                <span>📸</span>
+                <a href={businessInfo.instagram} target="_blank" rel="noopener noreferrer">{businessInfo.instagramHandle}</a>
+              </li>
+              <li>
+                <span>🌍</span>
+                Online & Offline
               </li>
             </ul>
           </div>
         </div>
 
         <div className="footer__bottom">
-          <p>&copy; {new Date().getFullYear()} Pencil Class. All rights reserved.</p>
+          <p>&copy; {new Date().getFullYear()} Pencil Classes by {businessInfo.founder}. All rights reserved.</p>
           <p>Designed with ❤️ for education</p>
         </div>
       </div>

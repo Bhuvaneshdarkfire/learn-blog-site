@@ -2,11 +2,11 @@ import { Link } from 'react-router-dom';
 import Hero from '../components/Hero';
 import StatsCounter from '../components/StatsCounter';
 import CourseCard from '../components/CourseCard';
-import { courses, stats, testimonials } from '../data/coursesData';
+import { courses, stats, testimonials, whyChooseUs, businessInfo } from '../data/coursesData';
 import './HomePage.css';
 
 export default function HomePage() {
-  const featuredCourses = courses.filter((_, i) => [0, 3, 7, 11, 15, 17].includes(i));
+  const featuredCourses = courses.slice(0, 6);
 
   return (
     <main className="home" id="home-page">
@@ -16,9 +16,9 @@ export default function HomePage() {
       {/* Featured Courses */}
       <section className="section home__courses" id="featured-courses">
         <div className="container">
-          <h2 className="section-title">Featured Courses</h2>
+          <h2 className="section-title">Our Courses</h2>
           <p className="section-subtitle">
-            Discover our most popular courses designed for every stage of learning
+            Handwriting, Drawing, Calligraphy & Tuition — all under one roof
           </p>
 
           <div className="home__courses-grid">
@@ -41,20 +41,13 @@ export default function HomePage() {
       {/* Why Choose Us */}
       <section className="section home__why" id="why-choose-us">
         <div className="container">
-          <h2 className="section-title">Why Choose Pencil Class?</h2>
+          <h2 className="section-title">Why Choose Pencil Classes?</h2>
           <p className="section-subtitle">
-            We combine futuristic teaching methods with proven pedagogy to deliver exceptional results
+            {businessInfo.certification} with {businessInfo.experience} of excellence
           </p>
 
           <div className="home__why-grid">
-            {[
-              { icon: '🎯', title: 'Expert Faculty', desc: 'Highly qualified teachers with years of experience in their respective fields.' },
-              { icon: '📚', title: 'Comprehensive Curriculum', desc: 'Carefully designed syllabus covering all boards — CBSE, State, ICSE.' },
-              { icon: '💡', title: 'Interactive Learning', desc: 'Smart classrooms with digital tools, 3D models, and hands-on experiments.' },
-              { icon: '📊', title: 'Progress Tracking', desc: 'Regular assessments with detailed reports sent to parents periodically.' },
-              { icon: '🏆', title: 'Proven Results', desc: 'Consistent top ranks in board exams and competitive entrance tests.' },
-              { icon: '🤝', title: 'Small Batch Size', desc: 'Limited students per batch ensuring personalized attention and care.' },
-            ].map((item, i) => (
+            {whyChooseUs.map((item, i) => (
               <div key={i} className="home__why-card glass-card" id={`why-card-${i}`}>
                 <span className="home__why-icon">{item.icon}</span>
                 <h3 className="home__why-title">{item.title}</h3>
@@ -65,28 +58,38 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* Testimonials */}
+      {/* Testimonials / Instagram Reviews */}
       <section className="section home__testimonials" id="testimonials">
         <div className="container">
-          <h2 className="section-title">What People Say</h2>
+          <h2 className="section-title">What Parents Say</h2>
           <p className="section-subtitle">
-            Hear from our students and parents about their experience
+            Reviews from our students' parents on Instagram
           </p>
 
           <div className="home__testimonials-grid">
-            {testimonials.map((t) => (
-              <div key={t.id} className="home__testimonial glass-card" id={`testimonial-${t.id}`}>
+            {testimonials.map((t, i) => (
+              <div key={i} className="home__testimonial glass-card" id={`testimonial-${i}`}>
                 <div className="home__testimonial-quote">"</div>
                 <p className="home__testimonial-text">{t.text}</p>
+                <div className="home__testimonial-stars">
+                  {Array.from({ length: t.rating }, (_, j) => (
+                    <span key={j} className="home__testimonial-star">★</span>
+                  ))}
+                </div>
                 <div className="home__testimonial-author">
-                  <span className="home__testimonial-avatar">{t.avatar}</span>
                   <div>
                     <div className="home__testimonial-name">{t.name}</div>
-                    <div className="home__testimonial-role">{t.role}</div>
+                    <div className="home__testimonial-role">{t.role} • {t.source}</div>
                   </div>
                 </div>
               </div>
             ))}
+          </div>
+
+          <div className="home__courses-cta" style={{ marginTop: '32px' }}>
+            <a href={businessInfo.instagram} target="_blank" rel="noopener noreferrer" className="btn btn-secondary">
+              📸 Follow us on Instagram
+            </a>
           </div>
         </div>
       </section>
@@ -95,14 +98,14 @@ export default function HomePage() {
       <section className="section home__cta" id="cta-section">
         <div className="container">
           <div className="home__cta-card">
-            <h2 className="home__cta-title">Ready to Start the Journey?</h2>
+            <h2 className="home__cta-title">Ready to Improve Your Child's Handwriting?</h2>
             <p className="home__cta-desc">
-              Enroll your child today and give them the gift of futuristic education
+              Contact us on WhatsApp to enroll. Online & Offline classes available!
             </p>
             <div className="home__cta-actions">
-              <Link to="/contact" className="btn btn-primary" id="cta-enroll">
-                Enroll Now
-              </Link>
+              <a href={`https://wa.me/91${businessInfo.whatsapp}`} className="btn btn-primary" id="cta-whatsapp" target="_blank" rel="noopener noreferrer">
+                💬 WhatsApp Us
+              </a>
               <Link to="/courses" className="btn btn-secondary" id="cta-browse">
                 Browse Courses
               </Link>
