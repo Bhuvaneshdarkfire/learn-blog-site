@@ -1,7 +1,8 @@
 import { useRef } from 'react';
 import { useFrame } from '@react-three/fiber';
+import { RoundedBox } from '@react-three/drei';
 
-export default function MathShape({ type = 'pencil', color = '#4a7aff', position = [0, 0, 0], scale = 1, speed = 1, wireframe = false }) {
+export default function MathShape({ type = 'pencil', color = '#4a7aff', position = [0, 0, 0], scale = 1, speed = 1 }) {
   const ref = useRef();
 
   useFrame(({ clock }) => {
@@ -16,30 +17,30 @@ export default function MathShape({ type = 'pencil', color = '#4a7aff', position
       case 'pencil':
         return (
           <group>
-            {/* Body */}
-            <mesh position={[0, 0, 0]}>
-              <cylinderGeometry args={[0.2, 0.2, 1.5, 8]} />
-              <meshStandardMaterial color={color} roughness={0.3} metalness={0.1} wireframe={wireframe} />
+            {/* Main hexagonal painted body */}
+            <mesh position={[0, 0, 0]} castShadow receiveShadow>
+              <cylinderGeometry args={[0.2, 0.2, 1.6, 6]} />
+              <meshStandardMaterial color={color} roughness={0.4} metalness={0.1} />
             </mesh>
-            {/* Wood cone */}
-            <mesh position={[0, -0.9, 0]}>
-              <coneGeometry args={[0.2, 0.3, 8]} />
-              <meshStandardMaterial color="#deb887" roughness={0.6} wireframe={wireframe} />
+            {/* Raw Wood Cone */}
+            <mesh position={[0, -0.95, 0]} castShadow receiveShadow>
+              <coneGeometry args={[0.2, 0.3, 6]} />
+              <meshStandardMaterial color="#fcd699" roughness={0.8} />
             </mesh>
             {/* Lead tip */}
-            <mesh position={[0, -1.1, 0]}>
-              <coneGeometry args={[0.05, 0.1, 8]} />
-              <meshStandardMaterial color="#333" roughness={0.8} wireframe={wireframe} />
+            <mesh position={[0, -1.15, 0]} castShadow>
+              <coneGeometry args={[0.04, 0.12, 6]} />
+              <meshStandardMaterial color="#2d2d2d" roughness={0.6} metalness={0.8} />
             </mesh>
-            {/* Eraser metal ring */}
-            <mesh position={[0, 0.8, 0]}>
-              <cylinderGeometry args={[0.21, 0.21, 0.15, 8]} />
-              <meshStandardMaterial color="#d1d5db" metalness={0.8} roughness={0.2} wireframe={wireframe} />
+            {/* Metallic Ferrule (The ring holding the eraser) */}
+            <mesh position={[0, 0.85, 0]} castShadow receiveShadow>
+              <cylinderGeometry args={[0.21, 0.21, 0.2, 16]} />
+              <meshStandardMaterial color="#e5e7eb" metalness={1} roughness={0.15} />
             </mesh>
-            {/* Eraser */}
-            <mesh position={[0, 0.95, 0]}>
-              <cylinderGeometry args={[0.2, 0.2, 0.2, 8]} />
-              <meshStandardMaterial color="#ec4899" roughness={0.9} wireframe={wireframe} />
+            {/* Pink Eraser Tip */}
+            <mesh position={[0, 1.05, 0]} castShadow>
+              <cylinderGeometry args={[0.2, 0.2, 0.3, 16]} />
+              <meshStandardMaterial color="#f472b6" roughness={0.9} />
             </mesh>
           </group>
         );
@@ -47,41 +48,66 @@ export default function MathShape({ type = 'pencil', color = '#4a7aff', position
       case 'book':
         return (
           <group>
-            {/* Cover */}
-            <mesh position={[0, 0, 0]}>
-              <boxGeometry args={[1.5, 0.2, 2]} />
-              <meshStandardMaterial color={color} roughness={0.4} metalness={0.2} wireframe={wireframe} />
-            </mesh>
-            {/* Pages */}
-            <mesh position={[0.05, 0, 0]}>
-              <boxGeometry args={[1.4, 0.16, 1.9]} />
-              <meshStandardMaterial color="#fdfdfd" roughness={0.8} wireframe={wireframe} />
+            {/* Hard Cover (Bottom) */}
+            <RoundedBox args={[1.5, 0.05, 2]} radius={0.02} position={[0, -0.15, 0]} castShadow receiveShadow>
+              <meshStandardMaterial color={color} roughness={0.6} />
+            </RoundedBox>
+            {/* Hard Cover (Top) */}
+            <RoundedBox args={[1.5, 0.05, 2]} radius={0.02} position={[0, 0.15, 0]} castShadow receiveShadow>
+              <meshStandardMaterial color={color} roughness={0.6} />
+            </RoundedBox>
+            {/* Spine (Side connecting covers) */}
+            <RoundedBox args={[0.1, 0.35, 2]} radius={0.02} position={[-0.72, 0, 0]} castShadow receiveShadow>
+              <meshStandardMaterial color={color} roughness={0.6} />
+            </RoundedBox>
+            {/* Paper pages block */}
+            <mesh position={[0.03, 0, 0]} castShadow receiveShadow>
+              <boxGeometry args={[1.35, 0.25, 1.9]} />
+              <meshStandardMaterial color="#fafaf9" roughness={1} />
             </mesh>
           </group>
         );
 
       case 'eraser':
         return (
-          <mesh>
-            <boxGeometry args={[1, 0.5, 1.5]} />
-            <meshStandardMaterial color={color} roughness={0.9} wireframe={wireframe} />
-          </mesh>
+          <group>
+            {/* White/Pink eraser block */}
+            <RoundedBox args={[1, 0.4, 1.6]} radius={0.05} castShadow receiveShadow>
+              <meshStandardMaterial color="#ffffff" roughness={1} />
+            </RoundedBox>
+            {/* Cardboard sleeve wrap */}
+            <mesh position={[0, 0, 0]} castShadow receiveShadow>
+              <boxGeometry args={[1.05, 0.45, 0.8]} />
+              <meshStandardMaterial color={color} roughness={0.7} />
+            </mesh>
+          </group>
         );
 
       case 'ruler':
         return (
-          <mesh>
-            <boxGeometry args={[2.5, 0.05, 0.4]} />
-            <meshStandardMaterial color={color} roughness={0.3} metalness={0.1} transparent opacity={0.8} wireframe={wireframe} />
-          </mesh>
+           <group>
+            <RoundedBox args={[3, 0.04, 0.4]} radius={0.01} castShadow receiveShadow>
+              {/* highly clear transparent acrylic look */}
+              <meshPhysicalMaterial 
+                color="#e5e5e5" 
+                metalness={0.1}
+                roughness={0}
+                transmission={0.9}
+                thickness={0.5}
+                transparent 
+                opacity={1}
+              />
+            </RoundedBox>
+            {/* A small metallic center hole or branding area could go here */}
+          </group>
         );
 
       // Fallback
       default:
         return (
-          <mesh>
+          <mesh castShadow receiveShadow>
             <octahedronGeometry args={[1, 0]} />
-            <meshStandardMaterial color={color} roughness={0.35} metalness={0.5} wireframe={wireframe} />
+            <meshStandardMaterial color={color} roughness={0.35} metalness={0.5} />
           </mesh>
         );
     }
