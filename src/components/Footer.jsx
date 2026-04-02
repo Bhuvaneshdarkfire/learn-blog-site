@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom';
 import { businessInfo } from '../data/coursesData';
+import pencilLogo from '../pencil logo.jpeg';
 import './Footer.css';
 
 export default function Footer() {
@@ -12,7 +13,7 @@ export default function Footer() {
           {/* Brand */}
           <div className="footer__brand">
             <Link to="/" className="footer__logo">
-              <span className="footer__logo-icon">✏️</span>
+              <img src={pencilLogo} alt="Pencil Classes" className="footer__logo-img" />
               <span className="footer__logo-text">Pencil Classes</span>
             </Link>
             <p className="footer__tagline">

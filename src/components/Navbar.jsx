@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
+import pencilLogo from '../pencil logo.jpeg';
 import './Navbar.css';
 
 const navLinks = [
@@ -29,7 +30,7 @@ export default function Navbar() {
     <nav className={`navbar ${scrolled ? 'navbar--scrolled' : ''}`} id="main-navbar">
       <div className="navbar__inner container">
         <Link to="/" className="navbar__logo" id="nav-logo">
-          <span className="navbar__logo-icon">✏️</span>
+          <img src={pencilLogo} alt="Pencil Classes" className="navbar__logo-img" />
           <span className="navbar__logo-text">Pencil Classes</span>
         </Link>
 

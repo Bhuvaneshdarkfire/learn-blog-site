@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { ADMIN_PASSWORD } from '../data/coursesData';
+import pencilLogo from '../pencil logo.jpeg';
 import './AdminPage.css';
 
 export default function AdminPage() {
@@ -101,7 +102,7 @@ export default function AdminPage() {
     return (
       <main className="admin-login-page">
         <div className="admin-login-card glass-card">
-          <div className="admin-login__icon">🔐</div>
+          <img src={pencilLogo} alt="Pencil Classes" className="admin-login__logo" />
           <h1 className="admin-login__title">Admin Login</h1>
           <p className="admin-login__subtitle">Pencil Classes Dashboard</p>
           <form onSubmit={handleLogin} className="admin-login__form">

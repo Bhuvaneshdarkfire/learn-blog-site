@@ -1,5 +1,4 @@
 import { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
 import './GalleryPage.css';
 
 export default function GalleryPage() {
@@ -31,8 +30,7 @@ export default function GalleryPage() {
             <div className="gallery-empty">
               <span style={{ fontSize: '64px' }}>🖼️</span>
               <h3>No images yet</h3>
-              <p>Gallery images are uploaded by the admin.</p>
-              <Link to="/admin" className="btn btn-secondary" style={{ marginTop: '16px' }}>Admin Login</Link>
+              <p>Check back soon for photos of our classrooms and student works!</p>
             </div>
           ) : (
             <div className="gallery-grid">
