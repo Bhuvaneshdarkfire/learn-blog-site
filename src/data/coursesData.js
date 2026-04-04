@@ -66,7 +66,7 @@ export const courses = [
     icon: '📝',
     category: 'handwriting',
     grade: 'Age: 6+',
-    duration: '15 Days',
+    duration: '2 Months',
     schedule: 'Daily Sessions',
     mode: 'Online & Offline',
     syllabus: ['Tamil Alphabets', 'Vowels & Consonants', 'Words', 'Sentences', 'Paragraphs'],
@@ -80,7 +80,7 @@ export const courses = [
     icon: '🎨',
     category: 'calligraphy',
     grade: 'Age: 6+',
-    duration: '20 Days',
+    duration: '7 Days',
     schedule: 'Weekly 3 Days',
     mode: 'Online & Offline',
     syllabus: ['Basic Strokes', 'Modern Calligraphy', 'Brush Lettering', 'Decorative Writing'],
@@ -146,10 +146,10 @@ export const courses = [
 ];
 
 export const stats = [
+  { label: 'YouTube Subscribers', value: 1.33, suffix: 'K' },
   { label: 'Students Trained', value: 150, suffix: '+' },
   { label: 'Years Experience', value: 4, suffix: '+' },
   { label: 'Countries', value: 4, suffix: '+' },
-  { label: 'Instagram Followers', value: 552, suffix: '+' },
 ];
 
 export const testimonials = [

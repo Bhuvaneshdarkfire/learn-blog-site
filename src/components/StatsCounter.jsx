@@ -30,7 +30,7 @@ function Counter({ target, suffix = '' }) {
         setCount(target);
         clearInterval(timer);
       } else {
-        setCount(Math.floor(current));
+        setCount(target % 1 !== 0 ? parseFloat(current.toFixed(2)) : Math.floor(current));
       }
     }, 20);
     return () => clearInterval(timer);
